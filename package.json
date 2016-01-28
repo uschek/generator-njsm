@@ -1,0 +1,55 @@
+{
+  "name": "generator-njsm",
+  "version": "0.0.0",
+  "description": "Scaffold out a node module",
+  "license": "MIT",
+  "repository": "uschek/generator-njsm",
+  "author": {
+    "name": "Christoph Uschkrat",
+    "email": "c.uschkrat@gmail.com",
+    "url": "github.com/uschek"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator",
+    "plugin",
+    "boilerplate",
+    "template",
+    "scaffold",
+    "node",
+    "module",
+    "node_module",
+    "node-module",
+    "init",
+    "sindre",
+    "spaces"
+  ],
+  "dependencies": {
+    "humanize-url": "^1.0.1",
+    "normalize-url": "^1.2.0",
+    "superb": "^1.1.3",
+    "underscore.string": "^3.0.3",
+    "yeoman-generator": "^0.22.1"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "pify": "^2.2.0",
+    "xo": "*",
+    "yeoman-assert": "^2.0.0",
+    "yeoman-test": "^1.0.0"
+  },
+  "xo": {
+    "esnext": true,
+    "ignores": [
+      "app/templates/**"
+    ]
+  }
+}
