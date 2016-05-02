@@ -9,7 +9,9 @@
     "email": "<%= email %>",
     "url": "<%= humanizedWebsite %>"
   },<% if (cli) { %>
-  "bin": "cli.js",<% } %>
+  "bin": {
+    "<%= moduleName %>": "cli.js"
+  },<% } %>
   "engines": {
     "node": ">=0.10.0"
   },
@@ -26,11 +28,11 @@
     ""
   ],
   "dependencies": {<% if (cli) { %>
-    "meow": "^3.6.0"
+    "meow": "^3.7.0"
   <% } %>},
   "devDependencies": {
-    "ava": "^0.8.0",
-    "xo": "^0.12.1"
+    "ava": "^0.14.0",
+    "xo": "^0.15.0"
   },
   "xo": {
     "space": true

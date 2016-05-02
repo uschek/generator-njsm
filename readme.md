@@ -8,7 +8,7 @@ Optionally with a [CLI](http://en.wikipedia.org/wiki/Command-line_interface).
 ## Install
 
 ```
-$ npm install --global generator-njsm
+$ npm install --global yo generator-njsm
 ```
 
 
