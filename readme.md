@@ -28,4 +28,4 @@ This module is a fork of [generator-nm](https://github.com/sindresorhus/generato
 
 ## License
 
-MIT © [Christoph Uschkrat](http://github.com/uschek)
+MIT © [Christoph Uschkrat](https://c.uschkrat.com)
