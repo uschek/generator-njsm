@@ -9,9 +9,7 @@
     "email": "<%= email %>",
     "url": "<%= humanizedWebsite %>"
   },<% if (cli) { %>
-  "bin": {
-    "<%= moduleName %>": "cli.js"
-  },<% } %>
+  "bin": "cli.js",<% } %>
   "engines": {
     "node": ">=0.10.0"
   },
