@@ -1,4 +1,4 @@
-# generator-njsm
+# generator-njsm [![npm](https://img.shields.io/npm/v/generator-njsm.svg?style=flat-square)](https://www.npmjs.com/package/generator-njsm) [![Build status](https://img.shields.io/travis/uschek/generator-njsm.svg?style=flat-square)](https://travis-ci.org/uschek/generator-njsm)
 
 > Scaffold out a node module
 
