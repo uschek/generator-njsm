@@ -6,8 +6,8 @@
   "repository": "uschek/generator-njsm",
   "author": {
     "name": "Christoph Uschkrat",
-    "email": "c.uschkrat@gmail.com",
-    "url": "https://c.uschkrat.com"
+    "email": "christoph@uschkrat.com",
+    "url": "c.uschkrat.com"
   },
   "engines": {
     "node": ">=4"
