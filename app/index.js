@@ -1,24 +1,51 @@
 'use strict';
 const superb = require('superb');
 const normalizeUrl = require('normalize-url');
+const humanizeUrl = require('humanize-url');
 const yeoman = require('yeoman-generator');
 const _s = require('underscore.string');
+const moduleName = require('./module-name');
 
-module.exports = yeoman.Base.extend({
+module.exports = class extends yeoman.Base {
+	constructor(a, b) {
+		super(a, b);
+
+		this.option('org', {
+			type: 'string',
+			desc: 'Publish to a GitHub organization account'
+		});
+
+		this.option('cli', {
+			type: 'boolean',
+			desc: 'Add a CLI'
+		});
+
+		this.option('coverage', {
+			type: 'boolean',
+			desc: 'Add code coverage with nyc'
+		});
+
+		this.option('coveralls', {
+			type: 'boolean',
+			desc: 'Upload coverage to coveralls.io (implies coverage)'
+		});
+	}
 	init() {
-		const cb = this.async();
-		const self = this;
-
-		this.prompt([{
+		return this.prompt([{
 			name: 'moduleName',
 			message: 'What do you want to name your module?',
-			default: this.appname.replace(/\s/g, '-'),
-			filter: x => _s.slugify(x)
+			default: _s.slugify(this.appname),
+			filter: x => moduleName.slugify(x)
+		}, {
+			name: 'moduleDescription',
+			message: 'What is your module description?',
+			default: `My ${superb()} module`
 		}, {
 			name: 'githubUsername',
 			message: 'What is your GitHub username?',
 			store: true,
-			validate: x => x.length > 0 ? true : 'You have to provide a username'
+			validate: x => x.length > 0 ? true : 'You have to provide a username',
+			when: () => !this.options.org
 		}, {
 			name: 'website',
 			message: 'What is the URL of your website?',
@@ -29,44 +56,68 @@ module.exports = yeoman.Base.extend({
 			name: 'cli',
 			message: 'Do you need a CLI?',
 			type: 'confirm',
-			default: false
-		}], props => {
+			default: Boolean(this.options.cli),
+			when: () => this.options.cli === undefined
+		}, {
+			name: 'nyc',
+			message: 'Do you need code coverage?',
+			type: 'confirm',
+			default: Boolean(this.options.coveralls || this.options.coverage),
+			when: () => (this.options.coverage === undefined) && (this.options.coveralls === undefined)
+		}, {
+			name: 'coveralls',
+			message: 'Upload coverage to coveralls.io?',
+			type: 'confirm',
+			default: false,
+			when: x => (x.nyc || this.options.coverage) && (this.options.coveralls === undefined)
+		}]).then(props => {
+			const or = (option, prop) => this.options[option] === undefined ? props[prop || option] : this.options[option];
+
+			const cli = or('cli');
+			const coveralls = or('coveralls');
+			const nyc = coveralls || or('coverage', 'nyc');
+
+			const repoName = moduleName.repoName(props.moduleName);
+
 			const tpl = {
 				moduleName: props.moduleName,
-				camelModuleName: _s.camelize(props.moduleName),
-				githubUsername: props.githubUsername,
-				name: self.user.git.name(),
-				email: self.user.git.email(),
+				moduleDescription: props.moduleDescription,
+				camelModuleName: _s.camelize(repoName),
+				githubUsername: this.options.org || props.githubUsername,
+				repoName,
+				name: this.user.git.name(),
+				email: this.user.git.email(),
 				website: props.website,
-				superb: superb(),
-				cli: props.cli
+				humanizedWebsite: humanizeUrl(props.website),
+				cli,
+				nyc,
+				coveralls
 			};
 
 			const mv = (from, to) => {
-				self.fs.move(self.destinationPath(from), self.destinationPath(to));
+				this.fs.move(this.destinationPath(from), this.destinationPath(to));
 			};
 
-			self.fs.copyTpl([
-				`${self.templatePath()}/**`,
+			this.fs.copyTpl([
+				`${this.templatePath()}/**`,
 				'!**/cli.js'
-			], self.destinationPath(), tpl);
+			], this.destinationPath(), tpl);
 
 			if (props.cli) {
-				self.fs.copyTpl(self.templatePath('cli.js'), self.destinationPath('cli.js'), tpl);
+				this.fs.copyTpl(this.templatePath('cli.js'), this.destinationPath('cli.js'), tpl);
 			}
 
 			mv('editorconfig', '.editorconfig');
 			mv('gitattributes', '.gitattributes');
 			mv('gitignore', '.gitignore');
+			mv('travis.yml', '.travis.yml');
 			mv('_package.json', 'package.json');
-
-			cb();
 		});
-	},
+	}
 	git() {
 		this.spawnCommandSync('git', ['init']);
-	},
+	}
 	install() {
 		this.installDependencies({bower: false});
 	}
-});
+};

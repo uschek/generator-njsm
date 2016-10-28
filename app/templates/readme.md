@@ -1,6 +1,6 @@
-# <%= moduleName %>
+# <%= repoName %> [![Build Status](https://travis-ci.org/<%= githubUsername %>/<%= repoName %>.svg?branch=master)](https://travis-ci.org/<%= githubUsername %>/<%= repoName %>)<% if (coveralls) { %> [![Coverage Status](https://coveralls.io/repos/github/<%= githubUsername %>/<%= repoName %>/badge.svg?branch=master)](https://coveralls.io/github/<%= githubUsername %>/<%= repoName %>?branch=master)<% } %>
 
-> My <%= superb %> module
+> <%= moduleDescription %>
 
 
 ## Install
@@ -34,7 +34,7 @@ Lorem ipsum.
 
 ##### foo
 
-Type: `boolean`<br/>
+Type: `boolean`<br>
 Default: `false`
 
 Lorem ipsum.<% if (cli) { %>
@@ -47,18 +47,18 @@ $ npm install --global <%= moduleName %>
 ```
 
 ```
-$ <%= moduleName %> --help
+$ <%= repoName %> --help
 
   Usage
-    <%= moduleName %> [input]
+    <%= repoName %> [input]
 
   Options
-    --foo  Lorem ipsum. [Default: false]
+    --foo  Lorem ipsum [Default: false]
 
   Examples
-    $ <%= moduleName %>
+    $ <%= repoName %>
     unicorns & rainbows
-    $ <%= moduleName %> ponies
+    $ <%= repoName %> ponies
     ponies & rainbows
 ```<% } %>
 
