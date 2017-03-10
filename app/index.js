@@ -2,11 +2,11 @@
 const superb = require('superb');
 const normalizeUrl = require('normalize-url');
 const humanizeUrl = require('humanize-url');
-const yeoman = require('yeoman-generator');
+const Generator = require('yeoman-generator');
 const _s = require('underscore.string');
 const moduleName = require('./module-name');
 
-module.exports = class extends yeoman.Base {
+module.exports = class extends Generator {
 	constructor(a, b) {
 		super(a, b);
 
@@ -103,7 +103,7 @@ module.exports = class extends yeoman.Base {
 				'!**/cli.js'
 			], this.destinationPath(), tpl);
 
-			if (props.cli) {
+			if (cli) {
 				this.fs.copyTpl(this.templatePath('cli.js'), this.destinationPath('cli.js'), tpl);
 			}
 
