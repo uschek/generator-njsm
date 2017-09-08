@@ -9,7 +9,7 @@ let generator;
 
 test.beforeEach(async () => {
 	await pify(helpers.testDirectory)(path.join(__dirname, 'temp'));
-	generator = helpers.createGenerator('nm:app', ['../app'], null, {skipInstall: true});
+	generator = helpers.createGenerator('njsm:app', ['../app'], null, {skipInstall: true});
 });
 
 test.serial('generates expected files', async () => {
