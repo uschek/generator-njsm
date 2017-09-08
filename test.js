@@ -3,13 +3,13 @@ import test from 'ava';
 import helpers from 'yeoman-test';
 import assert from 'yeoman-assert';
 import pify from 'pify';
-import moduleName from './app/module-name';
+import utils from './app/utils';
 
 let generator;
 
 test.beforeEach(async () => {
 	await pify(helpers.testDirectory)(path.join(__dirname, 'temp'));
-	generator = helpers.createGenerator('njsm:app', ['../app'], null, {skipInstall: true});
+	generator = helpers.createGenerator('nm:app', ['../app'], null, {skipInstall: true});
 });
 
 test.serial('generates expected files', async () => {
@@ -32,7 +32,8 @@ test.serial('generates expected files', async () => {
 		'license',
 		'package.json',
 		'readme.md',
-		'test.js'
+		'test.js',
+		'.npmrc'
 	]);
 
 	assert.noFile('cli.js');
@@ -61,7 +62,7 @@ test.serial('nyc option', async () => {
 		website: 'test.com',
 		cli: false,
 		nyc: true,
-		coveralls: false
+		codecov: false
 	});
 
 	await pify(generator.run.bind(generator))();
@@ -71,19 +72,19 @@ test.serial('nyc option', async () => {
 	assert.fileContent('.gitignore', /coverage/);
 	assert.fileContent('package.json', /"xo && nyc ava"/);
 	assert.fileContent('package.json', /"nyc": "/);
-	assert.noFileContent('package.json', /"coveralls":/);
+	assert.noFileContent('package.json', /"codecov":/);
 	assert.noFileContent('package.json', /"lcov"/);
-	assert.noFileContent('.travis.yml', /coveralls/);
+	assert.noFileContent('.travis.yml', /codecov/);
 });
 
-test.serial('coveralls option', async () => {
+test.serial('codecov option', async () => {
 	helpers.mockPrompt(generator, {
 		moduleName: 'test',
 		githubUsername: 'test',
 		website: 'test.com',
 		cli: false,
 		nyc: true,
-		coveralls: true
+		codecov: true
 	});
 
 	await pify(generator.run.bind(generator))();
@@ -93,15 +94,15 @@ test.serial('coveralls option', async () => {
 	assert.fileContent('.gitignore', /coverage/);
 	assert.fileContent('package.json', /"xo && nyc ava"/);
 	assert.fileContent('package.json', /"nyc": "/);
-	assert.fileContent('package.json', /"coveralls":/);
+	assert.fileContent('package.json', /"codecov":/);
 	assert.fileContent('package.json', /"lcov"/);
-	assert.fileContent('.travis.yml', /coveralls/);
+	assert.fileContent('.travis.yml', /codecov/);
 });
 
 test('parse scoped package names', t => {
-	t.is(moduleName.slugify('author/thing'), 'author-thing', 'slugify non-scoped packages');
-	t.is(moduleName.slugify('@author/thing'), '@author/thing', 'accept scoped packages');
-	t.is(moduleName.slugify('@author/hi/there'), 'author-hi-there', 'fall back to regular slugify if invalid scoped name');
+	t.is(utils.slugifyPackageName('author/thing'), 'author-thing', 'slugify non-scoped packages');
+	t.is(utils.slugifyPackageName('@author/thing'), '@author/thing', 'accept scoped packages');
+	t.is(utils.slugifyPackageName('@author/hi/there'), 'author-hi-there', 'fall back to regular slugify if invalid scoped name');
 });
 
 test.serial('prompts for description', async () => {
@@ -112,7 +113,7 @@ test.serial('prompts for description', async () => {
 		website: 'test.com',
 		cli: false,
 		nyc: true,
-		coveralls: true
+		codecov: true
 	});
 
 	await pify(generator.run.bind(generator))();
@@ -128,7 +129,7 @@ test.serial('defaults to superb description', async () => {
 		website: 'test.com',
 		cli: false,
 		nyc: true,
-		coveralls: true
+		codecov: true
 	});
 
 	await pify(generator.run.bind(generator))();

@@ -29,14 +29,14 @@
     "meow": "^3.7.0"
   <% } %>},
   "devDependencies": {
-    "ava": "^0.17.0",<% if (coveralls) { %>
-    "coveralls": "^2.11.12",<% } %><% if (nyc) { %>
-    "nyc": "^10.0.0",<% } %>
-    "xo": "^0.17.0"
+    "ava": "^0.20.0",<% if (codecov) { %>
+    "codecov": "^2.2.0",<% } %><% if (nyc) { %>
+    "nyc": "^11.0.0",<% } %>
+    "xo": "^0.18.2"
   },
   "xo": {
     "space": true
-  }<% if (coveralls) { %>,
+  }<% if (codecov) { %>,
   "nyc": {
     "reporter": [
       "lcov",

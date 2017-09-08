@@ -4,7 +4,7 @@ const normalizeUrl = require('normalize-url');
 const humanizeUrl = require('humanize-url');
 const Generator = require('yeoman-generator');
 const _s = require('underscore.string');
-const moduleName = require('./module-name');
+const utils = require('./utils');
 
 module.exports = class extends Generator {
 	constructor(a, b) {
@@ -25,9 +25,9 @@ module.exports = class extends Generator {
 			desc: 'Add code coverage with nyc'
 		});
 
-		this.option('coveralls', {
+		this.option('codecov', {
 			type: 'boolean',
-			desc: 'Upload coverage to coveralls.io (implies coverage)'
+			desc: 'Upload coverage to codecov.io (implies coverage)'
 		});
 	}
 	init() {
@@ -35,7 +35,7 @@ module.exports = class extends Generator {
 			name: 'moduleName',
 			message: 'What do you want to name your module?',
 			default: _s.slugify(this.appname),
-			filter: x => moduleName.slugify(x)
+			filter: x => utils.slugifyPackageName(x)
 		}, {
 			name: 'moduleDescription',
 			message: 'What is your module description?',
@@ -62,22 +62,22 @@ module.exports = class extends Generator {
 			name: 'nyc',
 			message: 'Do you need code coverage?',
 			type: 'confirm',
-			default: Boolean(this.options.coveralls || this.options.coverage),
-			when: () => (this.options.coverage === undefined) && (this.options.coveralls === undefined)
+			default: Boolean(this.options.codecov || this.options.coverage),
+			when: () => (this.options.coverage === undefined) && (this.options.codecov === undefined)
 		}, {
-			name: 'coveralls',
-			message: 'Upload coverage to coveralls.io?',
+			name: 'codecov',
+			message: 'Upload coverage to codecov.io?',
 			type: 'confirm',
 			default: false,
-			when: x => (x.nyc || this.options.coverage) && (this.options.coveralls === undefined)
+			when: x => (x.nyc || this.options.coverage) && (this.options.codecov === undefined)
 		}]).then(props => {
 			const or = (option, prop) => this.options[option] === undefined ? props[prop || option] : this.options[option];
 
 			const cli = or('cli');
-			const coveralls = or('coveralls');
-			const nyc = coveralls || or('coverage', 'nyc');
+			const codecov = or('codecov');
+			const nyc = codecov || or('coverage', 'nyc');
 
-			const repoName = moduleName.repoName(props.moduleName);
+			const repoName = utils.repoName(props.moduleName);
 
 			const tpl = {
 				moduleName: props.moduleName,
@@ -91,7 +91,7 @@ module.exports = class extends Generator {
 				humanizedWebsite: humanizeUrl(props.website),
 				cli,
 				nyc,
-				coveralls
+				codecov
 			};
 
 			const mv = (from, to) => {
@@ -111,6 +111,7 @@ module.exports = class extends Generator {
 			mv('gitattributes', '.gitattributes');
 			mv('gitignore', '.gitignore');
 			mv('travis.yml', '.travis.yml');
+			mv('npmrc', '.npmrc');
 			mv('_package.json', 'package.json');
 		});
 	}
