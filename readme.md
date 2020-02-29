@@ -49,8 +49,3 @@ Use [chalk](https://github.com/sindresorhus/chalk) if you want colors in your CL
 ## Credits
 
 This module is identical to [generator-nm](https://github.com/sindresorhus/generator-nm) by [Sindre Sorhus](http://sindresorhus.com), but with spaces instead of tabs. Thank you for building these [awesome modules](https://www.npmjs.com/~sindresorhus), Sindre!
-
-
-## License
-
-MIT © [Sindre Sorhus](https://sindresorhus.com)

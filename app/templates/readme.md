@@ -1,4 +1,4 @@
-# <%= repoName %> [![Build Status](https://travis-ci.org/<%= githubUsername %>/<%= repoName %>.svg?branch=master)](https://travis-ci.org/<%= githubUsername %>/<%= repoName %>)<% if (codecov) { %> [![codecov](https://codecov.io/gh/<%= githubUsername %>/<%= repoName %>/badge.svg?branch=master)](https://codecov.io/gh/<%= githubUsername %>/<%= repoName %>?branch=master)<% } %>
+# <%= repoName %> [![Build Status](https://travis-ci.com/<%= githubUsername %>/<%= repoName %>.svg?branch=master)](https://travis-ci.com/<%= githubUsername %>/<%= repoName %>)<% if (codecov) { %> [![codecov](https://codecov.io/gh/<%= githubUsername %>/<%= repoName %>/badge.svg?branch=master)](https://codecov.io/gh/<%= githubUsername %>/<%= repoName %>?branch=master)<% } %>
 
 > <%= moduleDescription %>
 
@@ -22,7 +22,7 @@ const <%= camelModuleName %> = require('<%= moduleName %>');
 
 ## API
 
-### <%= camelModuleName %>(input, [options])
+### <%= camelModuleName %>(input, options?)
 
 #### input
 
@@ -32,11 +32,11 @@ Lorem ipsum.
 
 #### options
 
-Type: `Object`
+Type: `object`
 
 ##### foo
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `false`
 
 Lorem ipsum.<% if (cli) { %>
@@ -63,8 +63,3 @@ $ <%= repoName %> --help
     $ <%= repoName %> ponies
     ponies & rainbows
 ```<% } %>
-
-
-## License
-
-MIT © [<%= name %>](<%= website %>)

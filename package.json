@@ -17,10 +17,10 @@
     }
   ],
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   },
   "scripts": {
-    "test": "xo && ava"
+    "test": "xo && ava test.js"
   },
   "files": [
     "app"
@@ -40,19 +40,19 @@
     "spaces"
   ],
   "dependencies": {
-    "humanize-url": "^1.0.1",
-    "is-scoped": "^1.0.0",
-    "normalize-url": "^2.0.0",
-    "superb": "^2.0.0",
+    "humanize-url": "^2.1.0",
+    "is-scoped": "^2.1.0",
+    "normalize-url": "^4.3.0",
+    "superb": "^4.0.0",
     "underscore.string": "^3.0.3",
-    "yeoman-generator": "^2.0.5"
+    "yeoman-generator": "^4.0.1"
   },
   "devDependencies": {
-    "ava": "*",
-    "pify": "^3.0.0",
-    "xo": "*",
+    "ava": "^2.1.0",
+    "pify": "^4.0.1",
+    "xo": "^0.24.0",
     "yeoman-assert": "^3.0.0",
-    "yeoman-test": "^1.0.0"
+    "yeoman-test": "^2.0.0"
   },
   "ava": {
     "failWithoutAssertions": false
