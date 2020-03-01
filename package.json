@@ -1,6 +1,6 @@
 {
   "name": "generator-njsm",
-  "version": "5.1.1",
+  "version": "5.1.2",
   "description": "Scaffold out a node module",
   "license": "MIT",
   "repository": "uschek/generator-njsm",
